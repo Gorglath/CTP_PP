@@ -56,9 +56,17 @@ namespace Collapse.Blocks {
             
             // Clear from board
             BoardManager.Instance.ClearBlockFromGrid(this);
-            
-            // Kill game object
+
             transform.DOKill();
+            transform.DOScale(Vector3.zero, .2f).SetDelay(delay);
+            transform.DOPunchRotation(Vector3.forward * 360.0f, .2f).SetDelay(delay);
+
+            Invoke("KillBlock", delay + .3f);
+        }
+
+        private void KillBlock()
+        {
+            transform.DOKill(true);
             Destroy(gameObject);
         }
     }

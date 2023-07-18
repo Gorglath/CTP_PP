@@ -25,6 +25,13 @@ namespace Collapse {
         [SerializeField]
         private float BoardRegenerationDelay;
 
+        [SerializeField]
+        [Description("A multiplier to control blocks sequence trigger delay.")]
+        private float m_blocksSequenceTriggerDelaySpeed;
+        [SerializeField]
+        [Description("A multiplier to control bombs sequence trigger delay.")]
+        private float m_bombSequenceTriggerDelaySpeed;
+
         // Our grid of blocks
         private Block[,] blocks;
 
@@ -32,6 +39,8 @@ namespace Collapse {
         private int[] colCounters;
         private Coroutine scheduledRegeneration;
 
+        // Keep count on how many bombs are active at any time.
+        public List<Bomb> m_activeBombs;
         // Singleton
         public static BoardManager Instance { get; private set; } 
 
@@ -40,12 +49,13 @@ namespace Collapse {
             // Init arrays
             blocks = new Block[BoardSize.x, BoardSize.y];
             colCounters = new int[BoardSize.x];
+            m_activeBombs = new List<Bomb>();
         }
 
         private void Start() {
             // Fill board on start
             ScheduleRegenerateBoard();
-            Debug.Log("Remove me for bonus points!");
+            //Debug.Log("Remove me for bonus points!");
         }
 
         /**

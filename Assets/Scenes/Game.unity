@@ -325,6 +325,8 @@ MonoBehaviour:
   BoardSize: {x: 11, y: 11}
   Spacing: {x: 0.55, y: 0.55}
   BoardRegenerationDelay: 0.5
+  m_blocksSequenceTriggerDelaySpeed: 0.1
+  m_bombSequenceTriggerDelaySpeed: 1
 --- !u!4 &1557776733
 Transform:
   m_ObjectHideFlags: 0

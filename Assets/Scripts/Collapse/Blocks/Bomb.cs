@@ -26,7 +26,8 @@ namespace Collapse.Blocks {
         }
 
         protected override void OnMouseUp() {
-            Shake();
+
+            Shake(TriggerBomb);
         }
         
         /**
@@ -39,11 +40,32 @@ namespace Collapse.Blocks {
                 onComplete?.Invoke();
             };
         }
-
+        private void TriggerBomb()
+        {
+            Triger(0.0f);
+        }
         public override void Triger(float delay) {
+            
             if (IsTriggered) return;
             IsTriggered = true;
+
+            if (delay > 0.0f)
+            {
+                Sprite.DOKill();
+                Sprite.localPosition = origin;
+                Sprite.DOShakePosition(delay, ShakeStrength, ShakeVibrato, fadeOut: false);
+            }
+
+            Invoke("DelayedBombTrigger", delay);
+        }
+        private void DelayedBombTrigger()
+        {
             BoardManager.Instance.TriggerBomb(this);
+
+            BoardManager.Instance.ClearBombFromList(this);
+            //Kill Bomb.
+            Sprite.DOKill();
+            Destroy(gameObject);
         }
     }
 }
